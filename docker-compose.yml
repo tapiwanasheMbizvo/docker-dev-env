@@ -16,7 +16,6 @@ services:
       - db_password
       - db_root_password
 
-
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.4
     command: start-dev
@@ -24,7 +23,7 @@ services:
       KC_DB: postgres
       KC_HOSTNAME_STRICT_HTTPS: false
       KC_HOSTNAME_STRICT_BACKCHANNEL: false
-      KC_DB_URL: jdbc:postgresql://localhost:5578/keycloakdb
+      KC_DB_URL: jdbc:postgresql://database:5578/keycloakdb
       KC_DB_USERNAME: pet_admin
       KC_DB_PASSWORD: pet_admin
       KC_HOSTNAME: localhost
