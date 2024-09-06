@@ -13,16 +13,20 @@ services:
       - app-network
 
   config-server:
-    image: your-config-server-image
+    build:
+      context: ./config
+      dockerfile: Dockerfile
     ports:
       - "8888:8888"
     networks:
       - app-network
 
   backend:
-    image: your-backend-image
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8785:8785"
     depends_on:
       - database
       - config-server
@@ -30,9 +34,11 @@ services:
       - app-network
 
   frontend:
-    image: your-frontend-image
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "8789:8789"
     networks:
       - app-network
 
