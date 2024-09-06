@@ -1,18 +1,18 @@
-
 services:
   database:
     container_name: pet-db
     image: postgres:latest
     ports:
-      - "5578:5432" # expose 5578 and map it to 5432
+      - "5578:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
       - app-network
+    env_file:
+      - path: /home/ubuntu/env/postgres-env.env
+        required: true
     environment:
-      POSTGRES_USER : pet_admin
-      POSTGRES_PASSWORD_FILE : /run/secrets/db_root_password
-      POSTGRES_DB: pet_shop
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_root_password  # Keep secret handling as necessary
     secrets:
       - db_password
       - db_root_password
@@ -21,24 +21,12 @@ services:
     container_name: pet-keycloak
     image: quay.io/keycloak/keycloak:25.0.4
     command: start-dev
-    environment:
-      KC_DB: postgres
-      KC_HOSTNAME_STRICT_HTTPS: false
-      KC_HOSTNAME_STRICT_BACKCHANNEL: false
-      KC_DB_URL: jdbc:postgresql://ec2-13-244-87-60.af-south-1.compute.amazonaws.com:5578/keycloakdb
-      KC_DB_USERNAME: pet_admin
-      KC_DB_PASSWORD: pet_admin
-      KC_HOSTNAME: ec2-13-244-87-60.af-south-1.compute.amazonaws.com
-      KEYCLOAK_ADMIN: admin
-      KC_HOSTNAME_STRICT: false
-      KC_HTTP_ENABLED: true
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    depends_on:
-      - database
     ports:
-      - "8787:8080" # expose keyclock on 8787
+      - "8787:8080"
     networks:
       - app-network
+    env_file:
+      - path: /home/ubuntu/env/keycloak-env.env
 
 volumes:
   db_data:
@@ -46,9 +34,8 @@ volumes:
 networks:
   app-network:
 
-
 secrets:
   db_password:
-    file: db_password.txt
+    file: /home/ubuntu/env/db_password.txt
   db_root_password:
-    file: db_root_password.txt
+    file: /home/ubuntu/env/db_root_password.txt
