@@ -26,10 +26,14 @@ services:
       KC_HOSTNAME_STRICT_HTTPS: false
       KC_HOSTNAME_STRICT_BACKCHANNEL: false
      # KC_DB_URL: jdbc:postgresql://database:5578/keycloakdb
-      KC_DB_URL: database:://pet_admin@pet_admin:5578/keycloakdb
+      KC_DB_URL: jdbc:postgresql://ec2-13-244-87-60.af-south-1.compute.amazonaws.com:5578/keycloakdb
       KC_DB_USERNAME: pet_admin
       KC_DB_PASSWORD: pet_admin
-      KC_HOSTNAME: localhost
+      KC_HOSTNAME: ec2-13-244-87-60.af-south-1.compute.amazonaws.com
+      KEYCLOAK_ADMIN: admin
+      KC_HOSTNAME_STRICT: false
+      KC_HTTP_ENABLED: true
+      KEYCLOAK_ADMIN_PASSWORD: admin
     depends_on:
       - database
     ports:
