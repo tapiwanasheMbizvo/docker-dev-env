@@ -27,6 +27,7 @@ services:
       - app-network
     env_file:
       - path: /home/ubuntu/env/keycloak-env.env
+        required: true
 
 volumes:
   db_data:
