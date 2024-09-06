@@ -13,45 +13,6 @@ services:
       POSTGRES_PASSWORD : "${PET_DB_PSWD}"
       POSTGRES_DB: "${PET_DB_NAME}"
 
-
-  config-server:
-    build:
-      context: ./config
-      dockerfile: Dockerfile
-    ports:
-      - "8888:8888"
-    networks:
-      - app-network
-    environment:
-       CONFIG_SERVER_DB_URL: "${CONFIG_SERVER_DB_URL}"
-       PET_DB_PSWD: "${PET_DB_PSWD}"
-       PET_DB_USER: "${PET_DB_USER}"
-
-
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "8785:8785"
-    depends_on:
-      - database
-      - config-server
-    networks:
-      - app-network
-    environment:
-      KEY_CLOAK_ISSUER_URI: "${KEY_CLOAK_ISSUER_URI}"
-      JWK_SET_URI: "${JWK_SET_URI}"
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "8789:8789"
-    networks:
-      - app-network
-
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.4
     environment:
