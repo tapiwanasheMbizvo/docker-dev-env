@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   database:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    ports:
+      - "5578:5432" # expose 5578 and map it to 5432
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
@@ -37,12 +37,11 @@ services:
       - app-network
 
   keycloak:
-    image: quay.io/keycloak/keycloak:25.0.4
-    environment:
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
+    build:
+      context: ./keycloak
+      dockerfile: Dockerfile
     ports:
-      - "8081:8080"
+      - "8787:8080" # expose keyclock on 8787
     networks:
       - app-network
 

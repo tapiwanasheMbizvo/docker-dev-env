@@ -1,0 +1,9 @@
+[submodule "config"]
+	path = config
+	url = https://github.com/tapiwanasheMbizvo/config.server.git
+[submodule "backend"]
+	path = backend
+	url = https://github.com/tapiwanasheMbizvo/springboot-hello-world.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/tapiwanasheMbizvo/pet-consumer.git
