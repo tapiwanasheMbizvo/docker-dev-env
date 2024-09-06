@@ -20,6 +20,11 @@ services:
       - "8888:8888"
     networks:
       - app-network
+    environment:
+       CONFIG_SERVER_DB_URL: "${CONFIG_SERVER_DB_URL}"
+       PET_DB_PSWD: "${PET_DB_PSWD}"
+       PET_DB_USER: "${PET_DB_USER}"
+
 
   backend:
     build:
@@ -32,6 +37,9 @@ services:
       - config-server
     networks:
       - app-network
+    environment:
+      KEY_CLOAK_ISSUER_URI: "${KEY_CLOAK_ISSUER_URI}"
+      JWK_SET_URI: "${JWK_SET_URI}"
 
   frontend:
     build:
@@ -46,6 +54,8 @@ services:
     build:
       context: ./keycloak
       dockerfile: Dockerfile
+    depends_on:
+      - database
     ports:
       - "8787:8080" # expose keyclock on 8787
     networks:
