@@ -1,16 +1,18 @@
-version: '3.8'
 
 services:
   database:
-    build:
-      context: ./postgres
-      dockerfile: Dockerfile
+    image: postgres:latest
     ports:
       - "5578:5432" # expose 5578 and map it to 5432
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
       - app-network
+    environment:
+      POSTGRES_USER : "${PET_DB_USER}"
+      POSTGRES_PASSWORD : "${PET_DB_PSWD}"
+      POSTGRES_DB: "${PET_DB_NAME}"
+
 
   config-server:
     build:
