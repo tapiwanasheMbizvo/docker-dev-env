@@ -53,9 +53,13 @@ services:
       - app-network
 
   keycloak:
-    build:
-      context: ./keycloak
-      dockerfile: Dockerfile
+    image: quay.io/keycloak/keycloak:25.0.4
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db/keycloakdb
+      KC_DB_USERNAME: pet_admin
+      KC_DB_PASSWORD: pet_admin
+      KC_HOSTNAME: localhost
     depends_on:
       - database
     ports:
