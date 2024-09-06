@@ -1,6 +1,7 @@
 
 services:
   database:
+    container_name: pet-db
     image: postgres:latest
     ports:
       - "5578:5432" # expose 5578 and map it to 5432
@@ -17,13 +18,15 @@ services:
       - db_root_password
 
   keycloak:
+    container_name: pet-keycloak
     image: quay.io/keycloak/keycloak:25.0.4
     command: start-dev
     environment:
       KC_DB: postgres
       KC_HOSTNAME_STRICT_HTTPS: false
       KC_HOSTNAME_STRICT_BACKCHANNEL: false
-      KC_DB_URL: jdbc:postgresql://database:5578/keycloakdb
+     # KC_DB_URL: jdbc:postgresql://database:5578/keycloakdb
+      KC_DB_URL: database:://pet_admin@pet_admin:5578/keycloakdb
       KC_DB_USERNAME: pet_admin
       KC_DB_PASSWORD: pet_admin
       KC_HOSTNAME: localhost
