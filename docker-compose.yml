@@ -19,8 +19,11 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.4
+    command: start
     environment:
       KC_DB: postgres
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HOSTNAME_STRICT_BACKCHANNEL: false
       KC_DB_URL: jdbc:postgresql://db/keycloakdb
       KC_DB_USERNAME: pet_admin
       KC_DB_PASSWORD: pet_admin
